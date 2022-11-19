@@ -1,0 +1,54 @@
+<template>
+  <lightning-card title="Mortgage Calculator">
+    <lightning-button 
+    label="reset"
+    title="Reset input fields"
+    onclick={resetInputFields}
+    >Reset</lightning-button>
+
+    <p>Home Price($)</p>
+    <lightning-input 
+    type="number" 
+    onchange={homePriceHandler} data-id="reset" 
+    placeholder="Enter total amount">
+    </lightning-input>
+
+    <p>Interest Rate(%)</p>
+    <lightning-input 
+    type="number" 
+    onchange={interestRateHandler} data-id="reset" 
+    placeholder="Enter interest rate">
+    </lightning-input>
+  </lightning-card>
+
+  <p>Loan Term(years)</p>
+  <lightning-input 
+  type="number" 
+  onchange={loanTermHandler} 
+  data-id="reset" 
+  placeholder="Enter years of the loan">
+  </lightning-input>
+
+  <p>Payment Frequency</p>
+  <lightning-combobox
+        name="Payment"
+        value={value}
+        data-id="reset"
+        placeholder="Select Payment frequency"
+        options={pickList}
+        onchange={pickListChange}
+      ></lightning-combobox>
+
+  <lightning-button 
+    label="result"
+    title="Get the Result"
+    onclick={getResult}
+    >Get the Result</lightning-button>
+
+    <lightning-button 
+    label="Save"
+    title="Save the Result"
+    onclick={saveResult}
+    >Save the Result</lightning-button>
+
+</template>
