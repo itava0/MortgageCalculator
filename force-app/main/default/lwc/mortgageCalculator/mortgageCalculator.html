@@ -9,14 +9,16 @@
     <p>Home Price($)</p>
     <lightning-input 
     type="number" 
-    onchange={homePriceHandler} data-id="reset" 
+    onchange={homePriceHandler} 
+    data-id="reset" 
     placeholder="Enter total amount">
     </lightning-input>
 
     <p>Interest Rate(%)</p>
     <lightning-input 
     type="number" 
-    onchange={interestRateHandler} data-id="reset" 
+    onchange={interestRateHandler} 
+    data-id="reset" 
     placeholder="Enter interest rate">
     </lightning-input>
   
@@ -50,5 +52,52 @@
     title="Save the Result"
     onclick={saveResult}
     >Save the Result</lightning-button>
+
+    <template if:true={mortgagePayment}
+    >
+    <div>
+      <p><lightning-formatted-number value={mortgagePayment} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number></p>
+      <p>per {paymentFrequency}</p>
+    </div>
+
+    <div>
+      <p><lightning-formatted-number value={overallPaymentAmount} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number></p>
+      <p>Overall Payment</p>
+    </div>
+
+
+  </template>
   </lightning-card>
+  <template if:true={data}>
+    <lightning-card title="Mortgage History">
+        <div class="slds-grid slds-wrap">
+          <template for:each={data} for:item="mortgageRecord">
+            <div class="slds-col slds-size_1-of-4" key={mortgageRecord.Id}>
+              <div class="card">
+                <p>{mortgageRecord.Name}</p>
+                <p>Mortgage Amount: {mortgageRecord.Mortgage_Amount__c}</p>
+                <p>Interest Rate: {mortgageRecord.Interest_Rate__c}</p>
+                <p>Amortization: {mortgageRecord.Amortization__c}</p>
+                <p>Payment: <lightning-formatted-number value={mortgageRecord.Payment__c} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number> </p><span>{mortgageRecord.Payment_Frequency__c}</span>
+                <p>Overall Payment: <lightning-formatted-number value={mortgageRecord.Overall_Payment__c} maximum-fraction-digits="2" minimum-fraction-digits="2"></lightning-formatted-number></p>
+                <lightning-button
+                  label="Delete"
+                  title="Delete"
+                  data-id={mortgageRecord.Id}
+                  onclick={deleteField}>
+                </lightning-button>
+                
+              <lightning-button 
+              label="View" 
+              onclick={viewRecord} 
+              value={mortgageRecord.Id}>
+            </lightning-button>
+             
+              </div>
+            </div>
+          </template>
+        </div>
+    </lightning-card>
+  </template>
+  
 </template>
